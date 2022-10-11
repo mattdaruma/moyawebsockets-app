@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>MFA Setup Token</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div>
+            {{(auth.associateSecretCode$ | async)?.secretCode || 'Setup Token Not Loaded'}}
+        </div>
+    </mat-card-content>
+</mat-card>
+<div style="margin-top:1em;">
+    <mat-form-field>
+        <mat-label>TOTP Code</mat-label>
+        <input [formControl]="totpControl" matInput type="text" required>
+    </mat-form-field>
+</div>
+<div style="display:flex; align-items: center;">
+    <button mat-button color="accent" [disabled]="(auth.amTalking$ | async)" (click)="mfaVerify()">Verify MFA</button>
+    <mat-spinner color="primary" *ngIf="(auth.amTalking$ | async)" [diameter]="40"></mat-spinner>
+</div>

@@ -1,0 +1,24 @@
+<mat-stepper  #stepper [selectedIndex]="selectedIndex$ | async">
+    <mat-step state="key" [completed]="loginSuccess$ | async">
+        <ng-template matStepLabel>Login</ng-template>
+        <app-login></app-login>     
+    </mat-step>
+    <mat-step state="shield" [completed]="newPasswordSuccess$ | async">
+        <ng-template matStepLabel>New Password Required</ng-template>
+        <app-change-password></app-change-password>
+    </mat-step>
+    <mat-step state="shield" [completed]="mfaSetupSuccess$ | async">
+        <ng-template matStepLabel>MFA Setup</ng-template>
+        <app-mfa-setup></app-mfa-setup>
+    </mat-step>
+    <mat-step state="shield" [completed]="mfaRequiredSuccess$ | async">
+        <ng-template matStepLabel>MFA Required</ng-template>
+        <app-mfa-required></app-mfa-required>
+    </mat-step>
+    <mat-step state="login" [completed]="false">
+        <ng-template matStepLabel>Enter App</ng-template>
+        <div style="display:flex; align-items: center;">
+            Redirecting to App...&nbsp;<mat-spinner diameter="40"></mat-spinner> 
+        </div>
+    </mat-step>
+</mat-stepper>

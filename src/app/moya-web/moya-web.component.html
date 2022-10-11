@@ -1,0 +1,95 @@
+<mat-toolbar color="primary">
+    <button *ngIf="sidebarOpen" color="accent" mat-icon-button (click)="sidebarOpen=false"><mat-icon>west</mat-icon></button> 
+    <button *ngIf="!sidebarOpen" color="accent" mat-icon-button (click)="sidebarOpen=true"><mat-icon>east</mat-icon></button> 
+    <span *ngIf="!(moya.usersMe$ | async)" class="center-flex">
+        <mat-spinner color="accent" diameter="20"></mat-spinner>
+        <span>Getting User Info...</span>
+    </span>
+    <span *ngIf="(moya.usersMe$ | async)">{{(moya.usersMe$ | async)?.nickname}}</span>
+    <span class="flex-stretch"></span>
+    <span>MoYa Web</span>
+</mat-toolbar>
+<mat-drawer-container>
+    <mat-drawer mode="side" [opened]="sidebarOpen">
+        <mat-tab-group>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="center-flex">
+                        <mat-icon color="primary">people</mat-icon>
+                        <span>Users</span>
+                    </div>
+                </ng-template>
+                <mat-list role="list">
+                    <mat-list-item *ngIf="(moya.users$ | async) === null">
+                        <div class="center-flex">
+                            <mat-spinner diameter="20"></mat-spinner>
+                            <span>Loading Users...</span>
+                        </div>
+                    </mat-list-item>
+                    <ng-container *ngFor="let user of (moya.users$ | async)">
+                        <mat-list-item>
+                            {{ user.nickname }}
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    </ng-container>
+                </mat-list>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="center-flex">
+                        <mat-icon color="primary">people-outline</mat-icon>
+                        <span>{{(moya.usersOnline$ | async)?.length ?? 0}} Online</span>
+                    </div>
+                </ng-template>
+                <mat-list role="list">
+                    <mat-list-item *ngIf="(moya.usersOnline$ | async) === null">
+                        <div class="center-flex">
+                            <mat-spinner diameter="20"></mat-spinner>
+                            <span>Loading Online Users...</span>
+                        </div>
+                    </mat-list-item>
+                    <ng-container *ngFor="let user of (moya.usersOnline$ | async)">
+                        <mat-list-item>
+                            {{ user.nickname }}
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    </ng-container>
+                </mat-list>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="center-flex">
+                        <mat-icon color="primary">chat</mat-icon>
+                        <span>Chat</span>
+                    </div>
+                </ng-template>
+                <div class="chat-field-container">
+                    <mat-form-field>
+                        <mat-label>Write Message</mat-label>
+                        <textarea matInput (keyup.enter)="sendMessage()" [formControl]="chatInput"></textarea>
+                        <button [disabled]="!chatInput.value" (click)="sendMessage()" matSuffix mat-icon-button color="primary">
+                            <mat-icon>send</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <mat-card *ngFor="let chat of chats">
+                    <mat-card-header>
+                        <mat-card-title>
+                            {{chat.sentBy}}
+                        </mat-card-title>
+                        <mat-card-subtitle>
+                            <span class="mat-small">{{chat.sentTime | date:'medium'}}</span>
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <span>{{chat.message}}</span>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-drawer>
+    <mat-drawer-content>
+        <p>moya-web works!</p>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>
