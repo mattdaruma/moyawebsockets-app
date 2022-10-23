@@ -1,5 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../auth.service';
 
@@ -10,8 +10,8 @@ import { AuthService } from '../../auth.service';
 })
 export class LoginComponent {
   loginForm = this.fb.group({
-    email: [],
-    password: []
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]]
   })
   constructor(private fb: FormBuilder, public auth: AuthService) {
   }

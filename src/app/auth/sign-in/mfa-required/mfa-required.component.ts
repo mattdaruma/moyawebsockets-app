@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 
 @Component({
@@ -8,12 +8,13 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./mfa-required.component.scss']
 })
 export class MfaRequiredComponent {
-  totpRequiredControl = new FormControl('')
+  totpRequiredControl = new FormControl('', [Validators.required])
   constructor(public auth: AuthService) { 
     this.auth.totpRequired$.subscribe(value => {
     })
   }
   mfaRequired(){
+    if(!this.totpRequiredControl.valid) return
     this.auth.sendMFACode(this.totpRequiredControl.value!)
   }
 }

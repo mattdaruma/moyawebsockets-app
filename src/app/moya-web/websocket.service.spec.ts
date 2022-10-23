@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MoyaWebService } from './moya-web.service';
+import { WebSocketService } from './websocket.service';
 
-describe('MoyaWebService', () => {
-  let service: MoyaWebService;
+describe('WebSocketService', () => {
+  let service: WebSocketService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MoyaWebService);
+    service = TestBed.inject(WebSocketService);
   });
 
   it('should be created', () => {

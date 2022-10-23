@@ -1,0 +1,16 @@
+.mat-form-field {
+    width: 100%;
+}
+.chat-message {
+    display: flex;
+    align-items: baseline;
+}
+.chat-message > span:not(:last-child) {
+    padding-right: 1em;
+}
+.chat-message > span:last-child {
+    white-space: pre-line;
+}
+.chat-field-container{
+    padding: 1em;
+}

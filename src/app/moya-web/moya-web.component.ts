@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ApiService } from './api.service';
-import { MoyaWebService } from './moya-web.service';
+import { BehaviorSubject } from 'rxjs';
+import { ChatService } from './chat/chat.service';
+import { WebSocketService } from './websocket.service';
+import { WorkService } from './work/work.service';
 
 @Component({
   selector: 'app-moya-web',
@@ -9,19 +11,14 @@ import { MoyaWebService } from './moya-web.service';
   styleUrls: ['./moya-web.component.scss']
 })
 export class MoyaWebComponent  {
-  sidebarOpen = true
-  chats: any[] = []
-  chatInput = new FormControl('')
-  constructor(public moya: MoyaWebService) { 
-    this.moya.usersChat$.subscribe(chatMessage => {
-      if(this.chats.length > 99) this.chats.pop()
-      this.chats.unshift(chatMessage)
+  public usersMe$ = new BehaviorSubject<any | null>(null)
+  constructor(private cs: ChatService, private work: WorkService, private ws: WebSocketService) {
+    this.ws.received$.subscribe(msg => {
+      if(msg?.usersMe) this.usersMe$.next(msg.usersMe)
     })
-  }
-  sendMessage(){
-    if(!this.chatInput.value) return;
-    this.moya.sendChat(this.chatInput.value!)
-    this.chatInput.setValue('')
-  }
-
+    this.getUsersMe()
+   }
+   getUsersMe(){
+    this.ws.sendMessage({action: 'users-me'})
+   }
 }

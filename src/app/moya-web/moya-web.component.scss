@@ -1,24 +1,4 @@
-.mat-drawer-container{
-    min-height: calc(100vh - 64px)
-}
-.mat-list{
-    padding: 1em;
-}
-.center-flex > span{
-    padding-left: 1em;
-}
-.flex-stretch{
-    flex: 1 1 auto;
-}
-.mat-card{
-    margin: 1em;
-}
-.mat-drawer{
-    width: 35em;
-}
-.chat-field-container{
-    padding: 1em;
-}
-.mat-form-field{
-    width: 25em;
+.mat-toolbar{
+    display: flex;
+    justify-content: space-between;
 }

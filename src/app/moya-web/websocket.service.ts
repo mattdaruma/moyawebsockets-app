@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class WebSocketService {
   public open$ = new Subject<any>()
   public closing$ = new Subject<any>()
   public closed$ = new Subject<any>()
@@ -46,11 +46,9 @@ export class ApiService {
     })
    }
    sendMessage(message: any){
-    console.warn('WEBSOCKET Sending', message)
     this.mySocket?.next(message)
    }
    private generateWebSocket(){
-    console.warn('WEBSOCKET Connecting')
     return webSocket({
       url: `wss://${environment.apiGateway.domain}/${environment.apiGateway.stage}?Authorization=${this._accessToken}`,
       openObserver: this.open$,

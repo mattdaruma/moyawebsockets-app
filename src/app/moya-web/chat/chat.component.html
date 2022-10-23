@@ -1,0 +1,75 @@
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <div class="center-flex">
+                <mat-icon color="primary">chat</mat-icon>
+                <span>Chat</span>
+            </div>
+        </ng-template>
+        <div class="chat-field-container">
+            <mat-form-field>
+                <mat-label>Write Message</mat-label>
+                <textarea matInput (keyup.enter)="sendMessage()" [formControl]="chatInput"></textarea>
+                <button [disabled]="!chatInput.value" (click)="sendMessage()" matSuffix mat-icon-button color="primary">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <mat-list role="list" >
+            <ng-container *ngFor="let chat of chats">
+                <mat-list-item style="height:auto;">
+                    <div class="chat-message">
+                        <span class="mat-body-strong">{{chat.sentBy}}</span>
+                        <span class="mat-small">{{chat.sentTime | date:'h:mm:ss'}}</span>
+                        <span>{{chat.message}}</span>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </ng-container>
+        </mat-list>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <div class="center-flex">
+                <mat-icon color="primary">people-outline</mat-icon>
+                <span>{{(cs.usersOnline$ | async)?.length ?? 0}} Online</span>
+            </div>
+        </ng-template>
+        <mat-list role="list">
+            <mat-list-item *ngIf="(cs.usersOnline$ | async) === null">
+                <div class="center-flex">
+                    <mat-spinner diameter="20"></mat-spinner>
+                    <span>Loading Online Users...</span>
+                </div>
+            </mat-list-item>
+            <ng-container *ngFor="let user of (cs.usersOnline$ | async)">
+                <mat-list-item>
+                    {{ user.nickname }}
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </ng-container>
+        </mat-list>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <div class="center-flex">
+                <mat-icon color="primary">people</mat-icon>
+                <span>Users</span>
+            </div>
+        </ng-template>
+        <mat-list role="list">
+            <mat-list-item *ngIf="(cs.users$ | async) === null">
+                <div class="center-flex">
+                    <mat-spinner diameter="20"></mat-spinner>
+                    <span>Loading Users...</span>
+                </div>
+            </mat-list-item>
+            <ng-container *ngFor="let user of (cs.users$ | async)">
+                <mat-list-item>
+                    {{ user.nickname }}
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </ng-container>
+        </mat-list>
+    </mat-tab>
+</mat-tab-group>
