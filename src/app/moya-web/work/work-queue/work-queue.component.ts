@@ -45,6 +45,8 @@ export class WorkQueueComponent {
         if(a.groupPriority < b.groupPriority) return a
         if(b.groupPriority < a.groupPriority) return b
         if(a.itemPriority < b.itemPriority) return a
+        if(b.itemPriority < a.itemPriority) return b
+        if(a.createdDate < b.createdDate) return a
         return b
       })
       this.queueDataSource.data = workItemsArray

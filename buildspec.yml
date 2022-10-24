@@ -1,0 +1,17 @@
+version: 0.2
+env:
+  variables:
+    APP_NAME: "moyawebsockets-app"
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14.x
+    commands:
+      - npm install && npm install -g @angular/cli
+  build:
+    commands:
+      - ng build --configuration=development
+  post_build:
+    commands:
+      - cd dist/$APP_NAME
+      - aws s3 sync . s3://my-awsome-bucket-of-files --delete
