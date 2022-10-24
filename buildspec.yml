@@ -14,4 +14,4 @@ phases:
   post_build:
     commands:
       - cd dist/$APP_NAME
-      - aws s3 sync . s3://my-awsome-bucket-of-files --delete
+      - aws s3 sync . s3://moyawebsocket-dev-app --delete
