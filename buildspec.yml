@@ -1,14 +1,14 @@
 version: 0.2
 env:
   variables:
-    APP_NAME: "moyawebsockets-app"
+    APP_NAME: "mo-ya-web"
 phases:
   install:
     runtime-versions:
       nodejs: 16.x
     commands:
       - npm install && npm install -g @angular/cli
-      - aws s3 cp ./src/environments/environment.ts s3://moyawebsocket-dev-configs/environment.ts
+      - aws s3 cp src/environments/environment.ts s3://moyawebsocket-dev-configs/environment.ts
   build:
     commands:
       - ng build --configuration=development
