@@ -9,7 +9,7 @@ phases:
     commands:
       - npm install && npm install -g @angular/cli
       - ls src
-      - aws s3 cp src/environments/environment.ts s3://moyawebsocket-dev-configs/environment.ts
+      - aws s3 cp s3://moyawebsocket-dev-configs/environment.ts src/environments/environment.ts
   build:
     commands:
       - ng build --configuration=development
