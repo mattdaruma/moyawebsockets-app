@@ -8,7 +8,7 @@ phases:
       nodejs: 16.x
     commands:
       - npm install && npm install -g @angular/cli
-      - aws s3 cp .src/environments/environment.ts s3://moyawebsocket-dev-configs/environment.ts
+      - aws s3 cp ./src/environments/environment.ts s3://moyawebsocket-dev-configs/environment.ts
   build:
     commands:
       - ng build --configuration=development
