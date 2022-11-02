@@ -19,13 +19,25 @@ export class WorkGroupListComponent {
     this.workGroupDataSource.paginator = paginator;
   }
   columns: any[] = [{
-    columnDef: 'displayName',
+    columnDef: 'title',
     header: 'Title',
-    cell: ((workGroup: any)=> `${workGroup.displayName}`)
+    cell: ((workGroup: any)=> `${workGroup.title}`)
   },{
-    columnDef: 'description',
-    header: 'Description',
-    cell: ((workGroup: any)=> `${workGroup.description}`)
+    columnDef: 'priority',
+    header: 'Priority',
+    cell: ((workGroup: any)=> `${workGroup.priority}`)
+  },{
+    columnDef: 'status',
+    header: 'Status',
+    cell: ((workGroup: any)=> ``)
+  },{
+    columnDef: 'connected',
+    header: 'Status',
+    cell: ((workGroup: any)=> ``)
+  },{
+    columnDef: 'disconnected',
+    header: 'Status',
+    cell: ((workGroup: any)=> ``)
   }]
   displayedColumns = this.columns.map(c => c.columnDef)
   constructor(public work: WorkService, route: ActivatedRoute) {

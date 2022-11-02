@@ -1,1 +1,8 @@
-<p>work-item works!</p>
+<h1 class="center">{{myWorkItem?.title}}</h1>
+<div class="mat-small center">{{myWorkItem?.createdDateUTC | date}} {{myWorkItem?.createdByUserId}}</div>
+<p class="workItemDescription">{{myWorkItem?.description}}</p>
+<div class="center">
+    <button mat-flat-button color="primary"><mat-icon>face</mat-icon>Assign to Self</button>
+    <button mat-flat-button color="primary"><mat-icon>person</mat-icon>Assign</button>
+    <button mat-flat-button color="primary"><mat-icon>check</mat-icon>Mark Complete</button>
+</div>

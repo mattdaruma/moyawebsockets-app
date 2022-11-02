@@ -23,10 +23,10 @@ import {MatMenuModule} from '@angular/material/menu';
     MatMenuModule,
     RouterModule.forChild([
       {path: '', component:MoyaWebComponent, children: [
-        {path: '', pathMatch: 'full', redirectTo: 'chat'},
+        {path: '', pathMatch: 'full', redirectTo: 'work'},
         {path: 'work', loadChildren: () => import('./work/work.module').then(m => m.WorkModule)},
         {path: 'chat', loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule)},
-        {path: '**', redirectTo: 'chat'}
+        {path: '**', redirectTo: 'work'}
       ]}
     ])
   ]

@@ -1,35 +1,31 @@
 <mat-toolbar color="primary">
-    <span *ngIf="!(usersMe$ | async)" class="center-flex">
-        <mat-spinner color="accent" diameter="20"></mat-spinner>
+    <span class="center-flex">
+        <mat-icon *ngIf="(socketConnected$ | async)" style="color:#0f0">link</mat-icon>
+        <mat-icon *ngIf="!(socketConnected$ | async)" color="warn">link_off</mat-icon>
     </span>
-    <span *ngIf="(usersMe$ | async)">{{(usersMe$ | async)?.nickname}}</span>
     <span>MoYa Web</span>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <button color="accent" mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
         <button mat-menu-item [routerLink]="['chat']">
-            <mat-icon color="primary">chat</mat-icon>
+            <mat-icon [color]="'primary'">chat</mat-icon>
             <span>Chat</span>
         </button>
-        <button mat-menu-item [matMenuTriggerFor]="work">
-            <mat-icon>work</mat-icon>
+        <button mat-menu-item [routerLink]="['work']">
+            <mat-icon color="primary">work</mat-icon>
             <span>Work</span>
         </button>
     </mat-menu>
-    <mat-menu #work="matMenu">
-        <button mat-menu-item  [routerLink]="['work', 'queue']">
-            <mat-icon color="primary">checklist</mat-icon>
-            <span>Queue</span>
-        </button>
-        <button mat-menu-item  [routerLink]="['work', 'groups']">
-            <mat-icon color="primary">groups</mat-icon>
-            <span>Groups</span>
-        </button>
-        <button mat-menu-item  [routerLink]="['work', 'search']">
-            <mat-icon color="primary">search</mat-icon>
-            <span>Search</span>
-        </button>
-    </mat-menu>
 </mat-toolbar>
-<router-outlet></router-outlet>
+<div [hidden]="(socketConnected$ | async)">
+    <div style="padding: 1em;display:flex;justify-content:center;align-items: center;">
+        <mat-spinner diameter="50"></mat-spinner>
+        <h1 style="padding-top:1em;padding-left:1em;">
+            Connecting to WebSocket API
+        </h1>
+    </div>
+</div>
+<div [hidden]="!(socketConnected$ | async)">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,12 @@
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.workGroupButtonContainer{
+    padding: 1em;
+}
+.workGroupButtonContainer > button:nth-child(1) {
+    margin-right: 1em;
+}

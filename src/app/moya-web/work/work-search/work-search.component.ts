@@ -19,9 +19,9 @@ export class WorkSearchComponent  {
     this.searchDataSource.paginator = paginator;
   }
   columns: any[] = [{
-    columnDef: 'displayName',
+    columnDef: 'title',
     header: 'Title',
-    cell: ((workItem: any)=> `${workItem.displayName}`)
+    cell: ((workItem: any)=> `${workItem.title}`)
   },{
     columnDef: 'description',
     header: 'Description',

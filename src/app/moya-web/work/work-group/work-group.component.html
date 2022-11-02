@@ -1,1 +1,3 @@
-<p>work-group works!</p>
+<h1 class="center">{{myWorkGroup?.title}} <button mat-icon-button color="primary"><mat-icon>chat</mat-icon></button></h1>
+<div class="mat-small center">{{myWorkGroup?.createdDateUTC | date}} {{myWorkGroup?.createdByUserId}}</div>
+<p class="workGroupDescription">{{myWorkGroup?.description}}</p>

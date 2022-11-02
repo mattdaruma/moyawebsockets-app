@@ -1,1 +1,49 @@
+<!-- <div class="center">
+    <button mat-button color="primary" [routerLink]="['groups']">
+        <mat-icon>group</mat-icon>
+        Groups
+    </button>
+    <button mat-button color="primary" [routerLink]="['queue']">
+        <mat-icon>checklist</mat-icon>
+        Queue
+    </button>
+    <button mat-button color="primary" [routerLink]="['search']">
+        <mat-icon>search</mat-icon>
+        Search
+    </button>
+</div> -->
+<div class="center workGroupButtonContainer">
+  <button mat-raised-button color="primary" [routerLink]="['queue']">
+    <mat-icon>checklist</mat-icon>
+    Queue
+  </button>
+  <button color="accent" mat-raised-button [matMenuTriggerFor]="workGroupsMenu">
+    <mat-icon>groups</mat-icon>
+    Groups
+  </button>
+  <mat-menu #workGroupsMenu="matMenu">
+    <button
+      mat-menu-item
+      *ngFor="let workGroup of (myWorkGroupsArray$ | async) ?? []"
+      [routerLink]="['group', workGroup.workGroupId]"
+    >
+      <mat-icon
+        [matBadge]="
+          workGroup.workItemIds.length > 0 ? workGroup.workItemIds.length : null
+        "
+        color="primary"
+        matBadgeColor="warn"
+      >
+        checklist
+      </mat-icon>
+      <mat-icon [matBadge]="'1'" matBadgeColor="warn" color="primary">
+        chat
+      </mat-icon>
+      <mat-icon color="warn">
+        link_off
+      </mat-icon>
+      {{ workGroup.title }}
+    </button>
+  </mat-menu>
+</div>
 <router-outlet></router-outlet>

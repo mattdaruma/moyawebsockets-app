@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { WorkComponent } from './work.component';
 import { RouterModule } from '@angular/router';
 import { WorkSearchComponent } from './work-search/work-search.component';
@@ -14,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import {MatBadgeModule} from '@angular/material/badge'; 
+import {MatMenuModule} from '@angular/material/menu'; 
 
 @NgModule({
   declarations: [
@@ -34,6 +35,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     MatButtonModule,
     MatPaginatorModule,
+    MatBadgeModule,
+    MatMenuModule,
     RouterModule.forChild([
       {path: '', component:WorkComponent, children: [
         {path: '', pathMatch: 'full', redirectTo: 'queue'},
@@ -45,6 +48,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         {path: '**', redirectTo: 'queue'}
       ]}
     ])
-  ]
+  ],
+  providers: [DatePipe]
 })
 export class WorkModule { }

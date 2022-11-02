@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortable } from '@angular/material/sort';
@@ -19,16 +20,28 @@ export class WorkQueueComponent {
     this.queueDataSource.paginator = paginator;
   }
   columns: any[] = [{
-    columnDef: 'displayName',
+    columnDef: 'title',
     header: 'Title',
-    cell: ((workItem: any)=> `${workItem.displayName}`)
+    cell: ((workItem: any)=> `${workItem.title}`)
   },{
-    columnDef: 'group',
-    header: 'Top Group',
-    cell: ((workItem: any)=> `${workItem.group.displayName}`)
+    columnDef: 'groupPriority',
+    header: 'Group Priority',
+    cell: (()=> ``)
+  },{
+    columnDef: 'priority',
+    header: 'Priority',
+    cell: ((workItem: any)=> `${workItem.priority}`)
+  },{
+    columnDef: 'createdBy',
+    header: 'Created By',
+    cell: ((workItem: any)=> `${workItem.createdByUserId}`)
+  },{
+    columnDef: 'createdDate',
+    header: 'Created Date',
+    cell: ((workItem: any)=> `${this.datePipe.transform(workItem.createdDateUTC, 'yyyy-MM-dd hh:mm')}`)
   }]
   displayedColumns = this.columns.map(c => c.columnDef)
-  constructor(public work: WorkService, route: ActivatedRoute) {
+  constructor(public work: WorkService, route: ActivatedRoute, private datePipe: DatePipe) {
     this.work.myWork$.subscribe((myWork: any) => {
       let workItemsArray: any[] = []
       for(let workItemId in myWork?.myWorkItems) {
@@ -41,14 +54,6 @@ export class WorkQueueComponent {
         }
         workItemsArray.push(myWork?.myWorkItems[workItemId])
       }
-      workItemsArray.sort((a, b)=>{
-        if(a.groupPriority < b.groupPriority) return a
-        if(b.groupPriority < a.groupPriority) return b
-        if(a.itemPriority < b.itemPriority) return a
-        if(b.itemPriority < a.itemPriority) return b
-        if(a.createdDate < b.createdDate) return a
-        return b
-      })
       this.queueDataSource.data = workItemsArray
     })
    }

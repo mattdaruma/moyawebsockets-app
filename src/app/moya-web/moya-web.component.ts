@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ChatService } from './chat/chat.service';
 import { WebSocketService } from './websocket.service';
-import { WorkService } from './work/work.service';
 
 @Component({
   selector: 'app-moya-web',
@@ -12,11 +10,26 @@ import { WorkService } from './work/work.service';
 })
 export class MoyaWebComponent  {
   public usersMe$ = new BehaviorSubject<any | null>(null)
-  constructor(private cs: ChatService, private work: WorkService, private ws: WebSocketService) {
+  public socketConnected$ = new BehaviorSubject<boolean>(false)
+  constructor(private cs: ChatService, private ws: WebSocketService) {
     this.ws.received$.subscribe(msg => {
-      if(msg?.usersMe) this.usersMe$.next(msg.usersMe)
+      if(msg?.usersMe) {
+        console.log('me', msg.usersMe)
+        this.usersMe$.next(msg.usersMe)
+      }
     })
-    this.getUsersMe()
+    this.ws.open$.subscribe(()=>{
+      this.socketConnected$.next(true)
+      this.getUsersMe()
+    })
+    this.ws.closing$.subscribe(()=>{
+      this.socketConnected$.next(false)
+      this.usersMe$.next(null)
+    })
+    this.ws.closed$.subscribe(()=>{
+      this.socketConnected$.next(false)
+      this.usersMe$.next(null)
+    })
    }
    getUsersMe(){
     this.ws.sendMessage({action: 'users-me'})
