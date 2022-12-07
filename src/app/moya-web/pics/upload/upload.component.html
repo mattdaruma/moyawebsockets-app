@@ -1,0 +1,24 @@
+<div class="uploads-container">
+    <input #picsUploadInput hidden="true" (change)="picUploads($event)" multiple type="file">
+    <div style="display:flex;">
+        <button [disabled]="!complete" mat-flat-button color="primary" (click)="picsUploadInput.click()"><mat-icon>photos</mat-icon>Upload Photos</button>
+        <div *ngIf="uploadFiles" class="spinner-div">
+            <mat-icon color="primary">save</mat-icon><span class="mat-caption">Total Size: {{totalSize | filesize}}</span>
+        </div>
+        <div *ngIf="complete && !uploadFiles" class="spinner-div">
+            <mat-icon color="primary">clear</mat-icon> No Files Selected
+        </div>
+        <div *ngIf="complete && uploadFiles" class="spinner-div">
+            <mat-icon color="accent">check</mat-icon>Upload Complete
+        </div>
+        <div class="spinner-div" *ngIf="!complete && uploadFiles">
+            <mat-spinner color="accent" diameter="30"></mat-spinner> 
+            <span class="spinner-text">Uploading Pictures</span>
+        </div>
+    </div>
+    <div *ngFor="let file of uploadFiles" class="file-row">
+        <span>{{file.name}}</span> 
+        <span class="mat-caption left-buffer">{{file.size | filesize}}</span>
+        <mat-progress-bar mode="determinate" [value]="filesStatus[file.name].percentComplete"></mat-progress-bar>
+    </div>
+</div>

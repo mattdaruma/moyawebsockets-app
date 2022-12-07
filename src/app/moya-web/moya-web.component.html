@@ -16,6 +16,10 @@
             <mat-icon color="primary">work</mat-icon>
             <span>Work</span>
         </button>
+        <button mat-menu-item [routerLink]="['pics']">
+            <mat-icon color="primary">photo</mat-icon>
+            <span>Pics</span>
+        </button>
     </mat-menu>
 </mat-toolbar>
 <div [hidden]="(socketConnected$ | async)">
